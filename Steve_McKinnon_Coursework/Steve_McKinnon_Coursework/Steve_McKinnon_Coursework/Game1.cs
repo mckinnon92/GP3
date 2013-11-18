@@ -28,9 +28,11 @@ namespace Steve_McKinnon_Coursework
 
         // Set the position of the model in world space, and set the rotation.
         private Vector3 mdlPosition = Vector3.Zero;
+        private float mdlPos = 1.0f;
         private Vector3 mdlRotation = Vector3.Zero;
         private float mdlRot = 0.0f;
         private Vector3 mdlVelocity = Vector3.Zero;
+        private int rotDir = 0;
 
       /*  // create an array of enemy number one
         private Model mdlEnemyOne;
@@ -76,9 +78,6 @@ namespace Steve_McKinnon_Coursework
 
             mdlRotation.X = -(float)Math.Sin(mdlRot);
             mdlRotation.Y = -(float)Math.Cos(mdlRot);
-            
-
-
 
             if (keyboardState.IsKeyDown(Keys.A))
             {
@@ -87,11 +86,11 @@ namespace Steve_McKinnon_Coursework
                 // Now scale our direction by how hard the trigger is down.
                 mdlVelocityAdd.X *= -0.05f;
                 mdlVelocity += mdlVelocityAdd;
-
-                if (mdlRot <= 0.20f)
+                if (mdlRot >= 0.20f)
                 {
                     mdlRot -= -1.0f * 0.20f;
                 }
+
             }
 
             if (keyboardState.IsKeyDown(Keys.D))
@@ -101,21 +100,29 @@ namespace Steve_McKinnon_Coursework
                 // Now scale our direction by how hard the trigger is down.
                 mdlVelocityAdd.X *= 0.05f;
                 mdlVelocity += mdlVelocityAdd;
-
                 if (mdlRot >= -0.20f)
                 {
                     mdlRot -= 1.0f * 0.20f;
                 }
-
             }
 
             if (keyboardState.IsKeyUp(Keys.A)&&(keyboardState.IsKeyUp(Keys.D)))
             {
-                mdlRot = 0.0f;
-                if (mdlPosition.X > 0.0f || mdlPosition.X < 0.0f)
+                
+                if (mdlPosition.X > 0.0f)
                 {
-                    mdlPosition = Vector3.Zero;
+                    mdlPosition.X = mdlPosition.X - mdlPos;
+                    mdlRot = mdlRot * -1;
                 }
+                if (mdlPosition.X < 0.0f)
+                {
+                    mdlPosition.X = mdlPosition.X + mdlPos;
+                }
+
+            /*    if (mdlPosition.X == 0.0f)
+                {
+                    mdlRot = 0.0f;
+                }*/
             }
 
             lastState = keyboardState;
